@@ -22,6 +22,14 @@
 
 ***
 
+* Functional Programming
+* Higher Order Functions
+* Algebraic Data Types
+* Three types of functions
+* Putting it all together
+
+***
+
 ## What is functional programming?
 
 ***
@@ -41,26 +49,57 @@ Every element in the domain must be mapped to some element in the codomain
 Calling a function with the same value (in domain) results in same value (in codomain).
 
 ***
+	
+Javascript
+
+	[lang=js]
+	function greet(person) {
+		return 'Hello, ' + person;
+	}
+	
+***
+
+Haskell
+
+	[lang=haskell]
+	timesTwo x = x * 2
+	
+	getFirst list = head list
+
+***
 
 ## Higher Order Functions
 
-***
-
-    [1,2,3].map(x => x * 2);
-    // [2,4,6]
+Functions that accept or return another function
 
 ***
 
-## Contexts
+	var list = [1,2,3,4],
+		result = [];
+		
+	for (var i = 0; i < list.length; i++) {
+		if (list[i] % 2 === 0) {
+			result.push(list[i] * 2);
+		}
+	}
 
 ***
-
-* Promise
-* Array
-* Task
-* Stream
-* IO
-
+	
+    [1,2,3,4].filter(x => x % 2 == 0)
+			 .map(x => x * 2)
+			 
+***
+	
+	const isEven = x => x % 2 == 0,
+		  timesTwo = x => x * 2;
+		
+	[1,2,3,4].filter(isEven)
+			 .map(timesTwo)
+			 
+	isEven(2)
+	
+	$.when(2).then(timesTwo)
+	
 ***
 
 ## Algebraic Data Types
@@ -85,6 +124,22 @@ data Shape
 	= Circle Point Double
     | Poly   [Point]
 ```
+
+***
+
+## Contexts
+
+***
+
+* Promise
+* Array
+* Task
+* Stream
+* IO
+
+***
+
+
 
 ***
 

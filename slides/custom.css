@@ -132,18 +132,18 @@ body {
   border: 0;
 }
 
-span.p, span.prep {
+span.p, span.prep, span.n, span.s {
   color: #0a9dff !important;
 }
 
-span.s, span.hljs-string {
+span.hljs-string {
   color : #47668f !important;
 }
 span.k, span.o {
   color: #aa759f !important;
 }
 
-span.n, span.hljs-keyword, span.t {
+span.hljs-keyword, span.t {
   color : #f4cf81 !important;
 }
 span.c, span.l {
