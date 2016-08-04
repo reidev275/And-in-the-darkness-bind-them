@@ -25,7 +25,7 @@
 * Functional Programming
 * Higher Order Functions
 * Algebraic Data Types
-* Three types of functions
+* Three types of functions*
 * Putting it all together
 
 ***
@@ -102,9 +102,12 @@ Functions that accept or return another function
 	
 ***
 
+
 ## Algebraic Data Types
 
 ***
+
+F#
 
     type Point = {
       X : double
@@ -113,19 +116,19 @@ Functions that accept or return another function
 
     type Shape =
       | Circle of Point * double
-      | Poly of Point list
+      | Polygon of Point list
+
+Haskell
+
+	[lang=haskell]
+	type Point = (Double,Double)
+
+	data Shape 
+		= Circle  Point Double
+		| Polygon [Point]
 
 ***
 
-```haskell
-data Point = Point Double Double
-
-data Shape 
-	= Circle Point Double
-    | Poly   [Point]
-```
-
-***
 
 ## Contexts
 
@@ -139,7 +142,18 @@ data Shape
 
 ***
 
+F#
 
+	type Either<'Left, 'Right> =
+		| Left of 'Left
+		| Right of 'Right
+
+Haskell
+
+	[lang=haskell]
+	data Either a b
+		= Left a
+		| Right b
 
 ***
 
