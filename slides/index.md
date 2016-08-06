@@ -8,8 +8,8 @@
 
 ## And in the darkness bind them
 ### A functional workflow to rule them all
-###[@ReidNEvans](http://twitter.com/reidnevans)
-###http://reidevans.tech
+### [@ReidNEvans](http://twitter.com/reidnevans)
+### http://reidevans.tech
 ###Founder of [@FunctionalKnox](http://twitter.com/functionalKnox)
 
 ***
@@ -24,11 +24,11 @@
 
 * Functional Programming
 * Higher Order Functions
-* Algebraic Data Types
+* Algebr aic Data Types
 * Three types of functions*
 * Putting it all together
 
-***
+*** 
 
 ## What is functional programming?
 
@@ -46,7 +46,7 @@ Every element in the domain must be mapped to some element in the codomain
 
 ### Determinism
 
-Calling a function with the same value (in domain) results in same value (in codomain).
+Calling a function with the  same value (in domain) results in same value (in codomain).
 
 ***
 
@@ -224,6 +224,10 @@ Python
 	}
 	?>  
 	
+***
+
+What's so important about this type?
+
 ***	
 
 Node
@@ -262,9 +266,25 @@ Elixir
 
 ***
 
-
+## The three* types of functions
 
 *** 
+
+Functions that don't know about our type
+
+    let add x y = x +y
+
+***
+ 
+Functions that return our type 
+
+    let head = function
+        | [] -> Left "Cannot take head of empty list"
+        | [x:_] -> Right x
+        
+***
+
+
 
 ###[@ReidNEvans](http://twitter.com/reidnevans)
 
