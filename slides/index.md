@@ -6,11 +6,11 @@
 
 ***
 
-### And in the darkness bind them
-#### A functional workflow to rule them all
-####[@ReidNEvans](http://twitter.com/reidnevans)
-####http://reidevans.tech
-####Founder of [@FunctionalKnox](http://twitter.com/functionalKnox)
+## And in the darkness bind them
+### A functional workflow to rule them all
+###[@ReidNEvans](http://twitter.com/reidnevans)
+###http://reidevans.tech
+###Founder of [@FunctionalKnox](http://twitter.com/functionalKnox)
 
 ***
 
@@ -38,7 +38,7 @@
 
 ***
 
-### Totality
+## Totality
 
 Every element in the domain must be mapped to some element in the codomain 
 
@@ -49,7 +49,12 @@ Every element in the domain must be mapped to some element in the codomain
 Calling a function with the same value (in domain) results in same value (in codomain).
 
 ***
-	
+
+# TODO: show they can be written in many languages.
+
+---
+
+
 Javascript
 
 	[lang=js]
@@ -62,9 +67,8 @@ Javascript
 Haskell
 
 	[lang=haskell]
-	timesTwo x = x * 2
+	head [1,2,3]
 	
-	getFirst list = head list
 
 ***
 
@@ -73,7 +77,7 @@ Haskell
 Functions that accept or return another function
 
 ***
-
+	[lang=javascript]
 	var list = [1,2,3,4],
 		result = [];
 		
@@ -84,21 +88,22 @@ Functions that accept or return another function
 	}
 
 ***
-	
+	[lang=javascript]
     [1,2,3,4].filter(x => x % 2 == 0)
 			 .map(x => x * 2)
 			 
 ***
-	
+	[lang=javascript]
 	const isEven = x => x % 2 == 0,
 		  timesTwo = x => x * 2;
 		
 	[1,2,3,4].filter(isEven)
 			 .map(timesTwo)
 			 
-	isEven(2)
+	timesTwo(2)
 	
-	$.when(2).then(timesTwo)
+	$.when(2)
+	.then(timesTwo)
 	
 ***
 
@@ -132,8 +137,6 @@ Haskell
 
 ## Contexts
 
-***
-
 * Promise
 * Array
 * Task
@@ -142,29 +145,126 @@ Haskell
 
 ***
 
-F#
-
-	type Either<'Left, 'Right> =
-		| Left of 'Left
-		| Right of 'Right
-
-Haskell
+## The One Type
 
 	[lang=haskell]
 	data Either a b
 		= Left a
 		| Right b
 
+---
+
+F#
+
+	type Either<'Left, 'Right> =
+		| Left of 'Left
+		| Right of 'Right		
+		
+---
+
+C#
+	
+	[lang=cs]
+	class Either<Right, Left>
+	{
+	  readonly Right right;
+	  readonly Left left;
+	  readonly bool isRight = true;
+
+	  public Either(Right val)
+	  {
+		right = val;    
+	  }
+
+	  public Either(Left val)
+	  {
+		left = val;
+		isRight = false;
+	  }
+	}
+
+
+---
+
+Python
+
+	[lang=py]
+	class Either(object):
+	   def __init__(self, value, is_right):
+		 self.is_right = is_right
+		 self.value = value
+
+	   @staticmethod
+	   def right(value):
+		 return Either(value, True)
+
+	   @staticmethod
+	   def left(value):
+		 return Either(value, False)	
+	
+---
+
+	[lang=php]
+	<?php
+	class Either {
+	  private $val = null;
+	  private $isRight = TRUE;
+	  private function __construct( $val, $isRight ) {
+		$this->val = $val;
+		$this->isRight = $isRight;
+	  }
+	  public static function Right( $right ) {
+		$instance = new self( $right, TRUE );
+		return $instance;
+	  }
+	  public static function Left( $left ) {
+		$instance = new self( $left, FALSE );
+		return $instance;
+	  }
+	}
+	?>  
+	
+***	
+
+Node
+
+	[lang=js]
+	//                        left    right
+	//                          \      /
+	fs.readFile('/etc/passwd', (err, data) => {
+	  if (err) throw err;
+	  console.log(data);
+	});
+
+Elixir
+
+	[lang=ruby]
+	File.read("hello.txt")
+	# {:ok, "World"}
+	
+	File.read("invalid.txt")
+	# {:error, :enoent}
+
+***
+
+	[lang=cs]
+	File.ReadAllText("invalid.txt")
+	// FileNotFoundException
+
 ***
 
 <section data-background="#5bc0de">
 
-An exception is a kind of cascading goto
+"An exception is a kind of cascading goto"
 
 **The Pragmatic Programmer**
 </section>
 
 ***
+
+
+
+*** 
 
 ###[@ReidNEvans](http://twitter.com/reidnevans)
 

@@ -128,30 +128,31 @@ body {
 }
 
 .reveal table.pre, .reveal table.pre td.lines pre {
-  background: #1c1b1a !important;
+  background: #fafafa !important;
   border: 0;
 }
 
-span.p, span.prep, span.n, span.s {
-  color: #0a9dff !important;
+span.n {
+	color : #ca1243 !important;
 }
 
-span.hljs-string {
-  color : #47668f !important;
+span.p, span.prep, span.s, span.hljs-string  {
+  color: #50a14f !important;
 }
+
 span.k, span.o {
-  color: #aa759f !important;
+  color: #a626a4 !important;
 }
 
 span.hljs-keyword, span.t {
-  color : #f4cf81 !important;
+  color : #0083be !important;
 }
 span.c, span.l {
- color : #666462 !important;
+ color : #5c6370 !important;
 }
 
 span.i, span.f, span.hljs-title {
-  color: #f8f8f8 !important;
+  color: #4078f2 !important;
 }
 
 
@@ -164,8 +165,8 @@ span.i, span.f, span.hljs-title {
   overflow: auto;
   max-height: 400px;
   word-wrap: normal;
-  background: #1c1b1a !important;
-  color: #f8f8f8 !important; }
+  background: #fafafa !important;
+  color: #494b53 !important; }
 
 .reveal table {
   margin: auto;
