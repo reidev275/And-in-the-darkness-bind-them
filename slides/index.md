@@ -10,7 +10,7 @@
 ### A functional workflow to rule them all
 ### [@ReidNEvans](http://twitter.com/reidnevans)
 ### http://reidevans.tech
-###Founder of [@FunctionalKnox](http://twitter.com/functionalKnox)
+### Founder of [@FunctionalKnox](http://twitter.com/functionalKnox)
 
 ***
 
@@ -25,7 +25,7 @@
 * Functional Programming
 * Higher Order Functions
 * Algebr aic Data Types
-* Three types of functions*
+* Two types of functions
 * Putting it all together
 
 *** 
@@ -266,7 +266,7 @@ Elixir
 
 ***
 
-## The three* types of functions
+## Two types of functions
 
 *** 
 
@@ -284,9 +284,7 @@ Functions that return our type
         
 ***
 
-
-
-###[@ReidNEvans](http://twitter.com/reidnevans)
+### [@ReidNEvans](http://twitter.com/reidnevans)
 
 ####http://reidevans.tech
 ####[@FunctionalKnox](http://twitter.com/functionalknox)
