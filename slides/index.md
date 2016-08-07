@@ -22,9 +22,22 @@
 
 ***
 
+## The Pitch
+
+1 data type
+3 functions
+
+***
+
+All your wildest dreams will come true
+
+![Napoleon](napoleon.gif)
+
+***
+
 * Functional Programming
 * Higher Order Functions
-* Algebr aic Data Types
+* Algebraic Data Types
 * Two types of functions
 * Putting it all together
 
@@ -286,6 +299,6 @@ Functions that return our type
 
 ### [@ReidNEvans](http://twitter.com/reidnevans)
 
-####http://reidevans.tech
-####[@FunctionalKnox](http://twitter.com/functionalknox)
+#### http://reidevans.tech
+#### [@FunctionalKnox](http://twitter.com/functionalknox)
 
