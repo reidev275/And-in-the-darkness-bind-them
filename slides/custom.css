@@ -128,7 +128,7 @@ body {
 }
 
 .reveal table.pre, .reveal table.pre td.lines pre {
-  background: #fafafa !important;
+  background: #fff !important;
   border: 0;
 }
 
@@ -140,19 +140,23 @@ span.p, span.prep, span.s, span.hljs-string  {
   color: #50a14f !important;
 }
 
-span.k, span.o {
-  color: #a626a4 !important;
+span.k, span.o, span.hljs-keyword {
+  color: #bb2bb9 !important;
 }
 
-span.hljs-keyword, span.t {
+span.hljs-decorator, span.t {
   color : #0083be !important;
 }
 span.c, span.l {
  color : #5c6370 !important;
 }
 
-span.i, span.f, span.hljs-title {
+span.f, span.hljs-title {
   color: #4078f2 !important;
+}
+
+span.i {
+	color: #494b53 !important;
 }
 
 
@@ -165,7 +169,7 @@ span.i, span.f, span.hljs-title {
   overflow: auto;
   max-height: 400px;
   word-wrap: normal;
-  background: #fafafa !important;
+  background: #fff !important;
   color: #494b53 !important; }
 
 .reveal table {

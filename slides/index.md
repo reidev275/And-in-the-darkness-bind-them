@@ -6,11 +6,11 @@
 
 ***
 
-## And in the darkness bind them
-### A functional workflow to rule them all
-### [@ReidNEvans](http://twitter.com/reidnevans)
-### http://reidevans.tech
-### Founder of [@FunctionalKnox](http://twitter.com/functionalKnox)
+### And in the darkness bind them
+#### A functional workflow to rule them all
+#### [@ReidNEvans](http://twitter.com/reidnevans)
+#### http://reidevans.tech
+#### Founder of [@FunctionalKnox](http://twitter.com/functionalKnox)
 
 ***
 
@@ -22,26 +22,17 @@
 
 ***
 
-## The Pitch
-
-1 data type
-3 functions
+##1 data type
+## +
+##3 functions
 
 ***
 
 All your wildest dreams will come true
 
-![Napoleon](napoleon.gif)
+![Napoleon](images/napoleon.gif)
 
 ***
-
-* Functional Programming
-* Higher Order Functions
-* Algebraic Data Types
-* Two types of functions
-* Putting it all together
-
-*** 
 
 ## What is functional programming?
 
@@ -57,31 +48,57 @@ Every element in the domain must be mapped to some element in the codomain
 
 ***
 
-### Determinism
+## Determinism
 
 Calling a function with the  same value (in domain) results in same value (in codomain).
 
 ***
+F#
 
-# TODO: show they can be written in many languages.
-
+	let double x = x * 2
+	
 ---
-
-
 Javascript
 
 	[lang=js]
-	function greet(person) {
-		return 'Hello, ' + person;
+	function greet(who) {
+		console.log("hello " + who)
 	}
-	
-***
 
+---
+F#
+
+	let formatDate format =
+		DateTime.Now.ToString(format)
+
+---
+C#
+
+	[lang=cs]
+	public string FormatDate(DateTime date, string format)
+	{
+		return date.ToString(format);
+	}
+
+---
+F#
+
+	let divide x y = x / y
+	
+---
+F#
+
+	let divide x y =
+		if y = 0
+		then None
+		else Some (x / y)
+
+---
 Haskell
 
 	[lang=haskell]
 	head [1,2,3]
-	
+	1
 
 ***
 
@@ -90,9 +107,14 @@ Haskell
 Functions that accept or return another function
 
 ***
+
+![eyeroll](images/eyeroll.gif)
+
+***
+
 	[lang=javascript]
 	var list = [1,2,3,4],
-		result = [];
+        result = [];
 		
 	for (var i = 0; i < list.length; i++) {
 		if (list[i] % 2 === 0) {
@@ -103,21 +125,31 @@ Functions that accept or return another function
 ***
 	[lang=javascript]
     [1,2,3,4].filter(x => x % 2 == 0)
-			 .map(x => x * 2)
+             .map(x => x * 2)
 			 
 ***
 	[lang=javascript]
 	const isEven = x => x % 2 == 0,
-		  timesTwo = x => x * 2;
+          timesTwo = x => x * 2;
 		
 	[1,2,3,4].filter(isEven)
-			 .map(timesTwo)
+             .map(timesTwo)
 			 
 	timesTwo(2)
 	
 	$.when(2)
 	.then(timesTwo)
+***
+
+	[lang=javascript]
+	const isAdmin = x => x.level > 9 && x.isActive;
 	
+	function getAdmins() {
+		return $.getJson('/api/users')
+				.done(data => data.filter(isAdmin))
+	}
+
+
 ***
 
 
@@ -125,36 +157,18 @@ Functions that accept or return another function
 
 ***
 
-F#
+Product Type
 
-    type Point = {
-      X : double
-	  Y : double
-    }
+      type Point = {
+          X : double
+          Y : double
+      }
 
-    type Shape =
-      | Circle of Point * double
-      | Polygon of Point list
+Sum Type
 
-Haskell
-
-	[lang=haskell]
-	type Point = (Double,Double)
-
-	data Shape 
-		= Circle  Point Double
-		| Polygon [Point]
-
-***
-
-
-## Contexts
-
-* Promise
-* Array
-* Task
-* Stream
-* IO
+      type Shape =
+        | Circle of Point * double
+        | Polygon of Point list
 
 ***
 
@@ -180,22 +194,32 @@ C#
 	[lang=cs]
 	class Either<Right, Left>
 	{
-	  readonly Right right;
-	  readonly Left left;
-	  readonly bool isRight = true;
+            readonly Right right;
+            readonly Left left;
+            readonly bool isRight = true;
 
-	  public Either(Right val)
-	  {
-		right = val;    
-	  }
+            public Either(Right val)
+            {
+                  right = val;    
+            }
 
-	  public Either(Left val)
-	  {
-		left = val;
-		isRight = false;
-	  }
+            public Either(Left val)
+            {
+                  left = val;
+                  isRight = false;
+            }
 	}
 
+
+---
+
+Swift
+
+	[lang=cs]
+	enum Either<T1, T2> {
+		case Left(T1)
+		case Right(T2)
+	}
 
 ---
 
@@ -216,6 +240,8 @@ Python
 		 return Either(value, False)	
 	
 ---
+
+PHP
 
 	[lang=php]
 	<?php
@@ -239,34 +265,89 @@ Python
 	
 ***
 
-What's so important about this type?
+Where have I seen this idea before?
 
 ***	
 
 Node
 
-	[lang=js]
-	//                        left    right
-	//                          \      /
-	fs.readFile('/etc/passwd', (err, data) => {
-	  if (err) throw err;
-	  console.log(data);
-	});
+    [lang=js]
+    fs.readFile('/etc/passwd', (err, data) => {
+      if (err) throw err;
+      console.log(data);
+    });
 
 Elixir
 
-	[lang=ruby]
-	File.read("hello.txt")
-	# {:ok, "World"}
-	
-	File.read("invalid.txt")
-	# {:error, :enoent}
+    [lang=ruby]
+    File.read("hello.txt")
+    # {:ok, "World"}
+    
+    File.read("invalid.txt")
+    # {:error, :enoent}
 
 ***
 
-	[lang=cs]
-	File.ReadAllText("invalid.txt")
-	// FileNotFoundException
+## Three types of functions
+
+*** 
+
+1. Functions that don't know about our type
+
+
+	let add x y = x + y
+	
+	add 2 3
+	5
+
+***
+ 
+2. Functions that return our type 
+
+
+	// 'a list -> Either<String, 'a>
+    let head = function
+        | [] -> Left "Cannot take head an of empty list"
+        | [x:_] -> Right x
+		
+	head []
+	Left "Cannot take head of an empty list"
+	
+	head [1;2;3]
+	Right 1
+
+***
+
+3. Functions that interop with impure libraries
+
+
+	// string -> string*
+    File.ReadAllText path
+
+***
+
+Node
+
+    [lang=js]
+    fs.readFile('/etc/passwd', (err, data) => {
+      if (err) throw err;
+      console.log(data);
+    });
+
+Elixir
+
+    [lang=ruby]
+    File.read("hello.txt")
+    # {:ok, "World"}
+    
+    File.read("invalid.txt")
+    # {:error, :enoent}
+	
+***
+
+    [lang=cs]
+    File.ReadAllText("invalid.txt")
+    // FileNotFoundException
 
 ***
 
@@ -279,26 +360,7 @@ Elixir
 
 ***
 
-## Two types of functions
-
-*** 
-
-Functions that don't know about our type
-
-    let add x y = x +y
-
-***
- 
-Functions that return our type 
-
-    let head = function
-        | [] -> Left "Cannot take head of empty list"
-        | [x:_] -> Right x
-        
-***
-
 ### [@ReidNEvans](http://twitter.com/reidnevans)
 
 #### http://reidevans.tech
 #### [@FunctionalKnox](http://twitter.com/functionalknox)
-
