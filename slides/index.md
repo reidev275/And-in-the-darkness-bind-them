@@ -34,6 +34,12 @@ All your wildest dreams will come true
 
 ***
 
+
+
+***
+
+***
+
 ## What is functional programming?
 
 ***
@@ -96,10 +102,16 @@ F#
 ---
 Haskell
 
+
 	[lang=haskell]
 	head [1,2,3]
 	1
 
+---
+Haskell
+
+        head []
+        *** Exception: Prelude.head: empty list
 ***
 
 ## Higher Order Functions
@@ -122,12 +134,14 @@ Functions that accept or return another function
 		}
 	}
 
-***
+---
+
 	[lang=javascript]
     [1,2,3,4].filter(x => x % 2 == 0)
              .map(x => x * 2)
 			 
-***
+---
+
 	[lang=javascript]
 	const isEven = x => x % 2 == 0,
           timesTwo = x => x * 2;
@@ -135,6 +149,15 @@ Functions that accept or return another function
 	[1,2,3,4].filter(isEven)
              .map(timesTwo)
 			 
+---
+
+	[lang=javascript]
+    const isEven = x => x % 2 == 0,
+          timesTwo = x => x * 2;
+
+    [1,2,3,4].filter(isEven)
+             .map(timesTwo)
+
 	timesTwo(2)
 	
 	$.when(2)
@@ -173,6 +196,10 @@ Sum Type
 ***
 
 ## The One Type
+
+---
+
+Haskell
 
 	[lang=haskell]
 	data Either a b
@@ -263,34 +290,12 @@ PHP
 	}
 	?>  
 	
-***
-
-Where have I seen this idea before?
-
-***	
-
-Node
-
-    [lang=js]
-    fs.readFile('/etc/passwd', (err, data) => {
-      if (err) throw err;
-      console.log(data);
-    });
-
-Elixir
-
-    [lang=ruby]
-    File.read("hello.txt")
-    # {:ok, "World"}
-    
-    File.read("invalid.txt")
-    # {:error, :enoent}
 
 ***
 
 ## Three types of functions
 
-*** 
+---
 
 1. Functions that don't know about our type
 
@@ -300,7 +305,7 @@ Elixir
 	add 2 3
 	5
 
-***
+---
  
 2. Functions that return our type 
 
@@ -308,7 +313,7 @@ Elixir
 	// 'a list -> Either<String, 'a>
     let head = function
         | [] -> Left "Cannot take head an of empty list"
-        | [x:_] -> Right x
+        | x::_ -> Right x
 		
 	head []
 	Left "Cannot take head of an empty list"
@@ -316,7 +321,7 @@ Elixir
 	head [1;2;3]
 	Right 1
 
-***
+---
 
 3. Functions that interop with impure libraries
 
