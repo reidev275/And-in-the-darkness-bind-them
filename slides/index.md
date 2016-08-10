@@ -331,6 +331,32 @@ PHP
 
 ***
 
+## Putting it all together
+
+---
+
+	let createLocation =
+		//geocode location
+		//format address
+		//insert into db
+		//return location
+
+---
+	let urlBase = 
+		"https://maps.googleapis.com/maps/api/geocode/json?address="
+
+	let geocodeLocation x =
+		let response = 
+			urlBase + x.Address + "," + x.Zip
+			|> Geocoder.load
+		let loc = (response.results |> Seq.head).geometry.location
+		{ x with Lat = loc.lat; Long = loc.lng }
+		
+---
+
+
+***
+
 Node
 
     [lang=js]
