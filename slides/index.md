@@ -336,14 +336,32 @@ PHP
 ---
 
 	let createLocation =
+		//validate location
 		//geocode location
 		//format address
-		//insert into db
 		//return location
 
 ---
+
+	let validateLocation x =
+		match x.Address, x.Zip with
+		| NotEmpty, NotEmpty -> Right x
+		| _ -> Left "Address and Zip are required"
+		
+---
+
+Functions that return our type
+
+	let bind binding either =
+		match either with
+		| Left l -> Left l
+		| Right r -> binding r
+
+---
+
 	let urlBase = 
-		"https://maps.googleapis.com/maps/api/geocode/json?address="
+		"https://maps.googleapis.com/" +
+		"maps/api/geocode/json?address="
 
 	let geocodeLocation x =
 		let response = 
@@ -354,6 +372,21 @@ PHP
 		
 ---
 
+Interoping with impure libraries
+
+	let doOrDoNot f x =
+      try
+        Right (f x)
+      with
+        | _ as ex -> Left ex
+
+---
+	
+	let createLocation x =
+		doOrDoNot geocodeLocation
+		//format address
+		//insert into db
+		//return location
 
 ***
 
