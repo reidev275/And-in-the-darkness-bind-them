@@ -34,12 +34,6 @@ All your wildest dreams will come true
 
 ***
 
-
-
-***
-
-***
-
 ## What is functional programming?
 
 ***
@@ -112,6 +106,7 @@ Haskell
 
         head []
         *** Exception: Prelude.head: empty list
+		
 ***
 
 ## Higher Order Functions
@@ -172,50 +167,26 @@ Functions that accept or return another function
 				.done(data => data.filter(isAdmin))
 	}
 
-
-***
-
-
-## Algebraic Data Types
-
-***
-
-Product Type
-
-      type Point = {
-          X : double
-          Y : double
-      }
-
-Sum Type
-
-      type Shape =
-        | Circle of Point * double
-        | Polygon of Point list
-
 ***
 
 ## The One Type
 
 ---
+F#
 
+	type Either<'Left, 'Right> =
+		| Left of 'Left
+		| Right of 'Right
+		
+---
 Haskell
 
 	[lang=haskell]
 	data Either a b
 		= Left a
 		| Right b
-
----
-
-F#
-
-	type Either<'Left, 'Right> =
-		| Left of 'Left
-		| Right of 'Right		
 		
 ---
-
 C#
 	
 	[lang=cs]
@@ -239,7 +210,6 @@ C#
 
 
 ---
-
 Swift
 
 	[lang=cs]
@@ -333,60 +303,153 @@ PHP
 
 ## Putting it all together
 
----
+***
 
 	let createLocation =
 		//validate location
-		//geocode location
 		//format address
-		//return location
+		//geocode location
+		//insert into db
 
----
+***
 
-	let validateLocation x =
+	let validate x =
 		match x.Address, x.Zip with
 		| NotEmpty, NotEmpty -> Right x
 		| _ -> Left "Address and Zip are required"
+
+`Location -> Either<String, Location>`
+
+***
+
+	let createLocation =
+		validate
+		//format address
+		//geocode location
+		//insert into db
 		
----
+`Location -> Either<String, Location>`
 
-Functions that return our type
+***
 
-	let bind binding either =
+	let format x =
+		{ x with x.Address = x.Address.ToTitleCase() 
+		         x.City = x.City.ToTitleCase() 
+				 x.State = x.State.ToUpper() }
+				 
+`Location -> Location`
+				 
+***
+
+	let createLocation =
+		validate
+		//format
+		//geocode location
+		//insert into db
+		
+* validate returns `Either<String,Location>`
+* format accepts `Location`
+* format returns `Location`
+
+***
+
+	let map fn either =
 		match either with
-		| Left l -> Left l
-		| Right r -> binding r
+		| Left left -> Left left
+		| Right r -> Right(fn r)
 
----
+***
+
+	let createLocation =
+		validate
+		>> map formatAddress
+		//geocode location
+		//insert into db
+		
+`Location -> Either<String, Location>`
+
+***
+
 
 	let urlBase = 
 		"https://maps.googleapis.com/" +
 		"maps/api/geocode/json?address="
 
-	let geocodeLocation x =
-		let response = 
-			urlBase + x.Address + "," + x.Zip
-			|> Geocoder.load
-		let loc = (response.results |> Seq.head).geometry.location
-		{ x with Lat = loc.lat; Long = loc.lng }
-		
----
+	let geocode x =
+		try
+			let response = 
+				urlBase + x.Address + "," + x.Zip
+				|> Geocoder.load
+			let loc = (response.results |> Seq.head).geometry.location
+			Right { Location = x; Lat = loc.lat; Long = loc.lng }
+		with
+			| ex -> Left ex.Message
 
-Interoping with impure libraries
+`Location -> Either<String, GeocodedLocation>`
 
-	let doOrDoNot f x =
-      try
-        Right (f x)
-      with
-        | _ as ex -> Left ex
+***
 
----
-	
-	let createLocation x =
-		doOrDoNot geocodeLocation
-		//format address
+	let createLocation =
+		validate
+		>> map format
+		//geocode location
 		//insert into db
-		//return location
+		
+
+* format returns `Either<String, Location>`
+* geocode accepts `Location`
+* geocode returns `Either<String, GeocodedLocation>`
+
+***
+
+	let bind fn either =
+		match either with
+		| Left left -> Left left
+		| Right r -> fn r
+
+***
+
+	let createLocation =
+		validate
+		>> map format
+		>> bind geocode
+		//insert into db
+
+`Location -> Either<String, GeocodedLocation>`
+
+***
+	type Insert = 
+	  SqlCommandProvider<
+		"INSERT INTO Locations(Address, City, State, Zip, Lat, Long)
+		VALUES (@Address, @City, @State, @Zip, @Lat, @Long)",
+		"connectionString">
+	
+	let insert x =
+	  use cmd = new Insert()
+	  cmd.Execute(x.Address, x.City, x.State, x.Zip, x.Lat, x.Long)
+
+`GeocodedLocation -> int`
+
+***
+
+	let createLocation =
+		validate
+		>> map format
+		>> bind geocode
+		//insert into db
+
+
+* geocode returns `Either<String, GeocodedLocation>`
+* insert accepts `GeocodedLocation`
+* insert returns `int`
+
+***
+
+	let createLocation =
+		validate
+		>> map format
+		>> bind geocode
+		>> map insert
 
 ***
 
