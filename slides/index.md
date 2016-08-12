@@ -312,7 +312,7 @@ Elixir
 	validateState { City = "Atlanta"; State = "GA" }
 	Left "State must be TN"
 	
-![a to mb](images/validate.jpg)
+![a to mb](images/Validate.jpg)
 
 ***
 
@@ -335,7 +335,7 @@ Elixir
 
 `Location -> Either<String, Location>`
 
-![a to mb](images/validate.jpg)
+![a to mb](images/Validate.jpg)
 
 ***
 
@@ -347,7 +347,7 @@ Elixir
 		
 `Location -> Either<String, Location>`
 
-![a to mb](images/validate.jpg)
+![a to mb](images/Validate.jpg)
 
 ***
 
@@ -428,7 +428,7 @@ Elixir
 
 `Location -> Either<String, GeocodedLocation>`
 
-![a to mb](images/validate.jpg)
+![a to mb](images/Validate.jpg)
 
 ***
 
