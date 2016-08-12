@@ -1,0 +1,1 @@
+robots.txt no follow while testing happens

@@ -161,7 +161,9 @@ span.i {
 
 
 .reveal code {
-  font-family: "Ubuntu Mono"; }
+  font-family: "Ubuntu Mono"; 
+  color: #494b53 !important;
+}
 
 .reveal pre code {
   display: block;

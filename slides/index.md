@@ -24,7 +24,7 @@
 
 ##1 data type
 ## +
-##3 functions
+##2 functions
 
 ***
 
@@ -190,7 +190,7 @@ Haskell
 C#
 	
 	[lang=cs]
-	class Either<Right, Left>
+	class Either<Left, Right>
 	{
             readonly Right right;
             readonly Left left;
@@ -260,10 +260,28 @@ PHP
 	}
 	?>  
 	
+***
+
+Node
+
+    [lang=js]
+    fs.readFile('/etc/passwd', (err, data) => {
+      if (err) throw err;
+      console.log(data);
+    });
+
+Elixir
+
+    [lang=ruby]
+    File.read("hello.txt")
+    # {:ok, "World"}
+    
+    File.read("invalid.txt")
+    # {:error, :enoent}
 
 ***
 
-## Three types of functions
+## Two types of functions
 
 ---
 
@@ -274,30 +292,27 @@ PHP
 	
 	add 2 3
 	5
-
+	
+![a to b](images/a-b.jpg)
+	
 ---
  
 2. Functions that return our type 
 
 
-	// 'a list -> Either<String, 'a>
-    let head = function
-        | [] -> Left "Cannot take head an of empty list"
-        | x::_ -> Right x
+	// Location -> Either<String, Location>
+    let validateState x = 
+		if x.State = "TN"
+		then Right x
+		else Left "State must be TN"
 		
-	head []
-	Left "Cannot take head of an empty list"
+	validateState { City = "Chattanooga"; State = "TN" }
+	Right { City = "Chattanooga"; State = "TN" }
 	
-	head [1;2;3]
-	Right 1
-
----
-
-3. Functions that interop with impure libraries
-
-
-	// string -> string*
-    File.ReadAllText path
+	validateState { City = "Atlanta"; State = "GA" }
+	Left "State must be TN"
+	
+![a to mb](images/validate.jpg)
 
 ***
 
@@ -320,6 +335,8 @@ PHP
 
 `Location -> Either<String, Location>`
 
+![a to mb](images/validate.jpg)
+
 ***
 
 	let createLocation =
@@ -330,6 +347,8 @@ PHP
 		
 `Location -> Either<String, Location>`
 
+![a to mb](images/validate.jpg)
+
 ***
 
 	let format x =
@@ -338,6 +357,8 @@ PHP
 				 x.State = x.State.ToUpper() }
 				 
 `Location -> Location`
+
+![a to b](images/a-b.jpg)
 				 
 ***
 
@@ -349,7 +370,8 @@ PHP
 		
 * validate returns `Either<String,Location>`
 * format accepts `Location`
-* format returns `Location`
+
+![v to f](images/validateToFormat.jpg)
 
 ***
 
@@ -358,15 +380,34 @@ PHP
 		| Left left -> Left left
 		| Right r -> Right(fn r)
 
+![map](images/map.jpg)
+		
+---
+
+	[lang=cs]
+	public Either<T, Left> Map<T>(Func<Right, T> mapping)
+	{
+		if (isRight)
+		{
+			var result = mapping(right);
+			return new Either<T, Leftft>(result);
+		}
+		return new Either<T, Left>(left);
+	}
+	
+![map](images/map.jpg)
+
 ***
 
 	let createLocation =
 		validate
-		>> map formatAddress
+		>> map format
 		//geocode location
 		//insert into db
 		
 `Location -> Either<String, Location>`
+
+![vmf](images/validateMapFormat.jpg)
 
 ***
 
@@ -387,6 +428,8 @@ PHP
 
 `Location -> Either<String, GeocodedLocation>`
 
+![a to mb](images/validate.jpg)
+
 ***
 
 	let createLocation =
@@ -400,12 +443,30 @@ PHP
 * geocode accepts `Location`
 * geocode returns `Either<String, GeocodedLocation>`
 
+![f to g](images/formatToGeocode.jpg)
+
 ***
 
 	let bind fn either =
 		match either with
 		| Left left -> Left left
 		| Right r -> fn r
+
+![bind](images/bind.jpg)
+		
+---
+
+	[lang=cs]
+	public Either<T, Left> Bind<T>(Func<Right, Either<T, Left>> binding)
+	{
+		if (isRight)
+		{
+			return binding(right);
+		}
+		return new Either<T, Left>(left);
+	}
+
+![bind](images/bind.jpg)
 
 ***
 
@@ -416,6 +477,8 @@ PHP
 		//insert into db
 
 `Location -> Either<String, GeocodedLocation>`
+
+![vmfbg](images/vmfbg.jpg)
 
 ***
 	type Insert = 
@@ -430,6 +493,8 @@ PHP
 
 `GeocodedLocation -> int`
 
+![a to b](images/a-b.jpg)
+
 ***
 
 	let createLocation =
@@ -443,6 +508,8 @@ PHP
 * insert accepts `GeocodedLocation`
 * insert returns `int`
 
+![g to i](images/geocodeToInsert.jpg)
+
 ***
 
 	let createLocation =
@@ -450,40 +517,46 @@ PHP
 		>> map format
 		>> bind geocode
 		>> map insert
+		
+![vmfbgmi](images/vmfbgmi.jpg)
 
 ***
 
-Node
+####Regular Function
+`a -> b`
 
-    [lang=js]
-    fs.readFile('/etc/passwd', (err, data) => {
-      if (err) throw err;
-      console.log(data);
-    });
+![a-b](images/a-b.jpg)
 
-Elixir
+---
 
-    [lang=ruby]
-    File.read("hello.txt")
-    # {:ok, "World"}
-    
-    File.read("invalid.txt")
-    # {:error, :enoent}
-	
-***
+####Function to Either
+`a -> Either<c, b>`
 
-    [lang=cs]
-    File.ReadAllText("invalid.txt")
-    // FileNotFoundException
+![a-mb](images/Validate.jpg)
 
-***
+---
 
-<section data-background="#5bc0de">
+####Map
+`(a -> b) -> Either<c, a> -> Either<c, b>`
 
-"An exception is a kind of cascading goto"
+![map](images/map.jpg)
 
-**The Pragmatic Programmer**
-</section>
+---
+
+####Bind
+`(a -> Either<c, b>) -> Either<c, a> -> Either<c, b>`
+
+![bind](images/bind.jpg)
+
+---
+
+	let createLocation =
+		validate
+		>> map format
+		>> bind geocode
+		>> map insert
+		
+![vmfbgmi](images/vmfbgmi.jpg)
 
 ***
 
